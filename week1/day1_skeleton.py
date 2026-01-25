@@ -1,6 +1,14 @@
 import pygame
 import math
 
+def bounce(x, y):
+    global vx, vy, robot_radius, WIDTH, HEIGHT
+    if x <= robot_radius or x >= WIDTH - robot_radius:
+        vx = -vx
+    
+    if y <= robot_radius or y >= HEIGHT - robot_radius:
+        vy = -vy
+
 # Initialize Pygame
 pygame.init()
 
@@ -22,8 +30,8 @@ robot_radius = 10
 
 # Velocity commands (pixels per second)
 # THIS IS WHAT YOU'LL CHANGE TO EXPERIMENT
-vx = 5.0  # pixels/sec to the right
-vy = 3.0  # pixels/sec downward
+vx = 50.0  # pixels/sec to the right
+vy = 30.0  # pixels/sec downward
 
 # Simulation parameters
 dt = 0.05  # time step in seconds (50ms)
@@ -45,7 +53,9 @@ while running:
     # New position = old position + velocity * time_step
     robot_x += vx * dt
     robot_y += vy * dt
-    
+
+    bounce(robot_x, robot_y)
+        
     # Store position for trail
     trail.append((int(robot_x), int(robot_y)))
     
