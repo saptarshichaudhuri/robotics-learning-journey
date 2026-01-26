@@ -50,6 +50,9 @@ while running:
     # UPDATE PHYSICS - This is the core!
     # Update pose
     
+    v = (v_right + v_left) / 2.0 # linear velocity (forward speed)
+    omega = (v_right - v_left) / wheelbase # angular velocity (turning rate)
+    
     robot_x += v * math.cos(theta) * dt
     robot_y += v * math.sin(theta) * dt
     theta += omega * dt
@@ -70,6 +73,12 @@ while running:
     
     # Draw robot
     pygame.draw.circle(screen, RED, (int(robot_x), int(robot_y)), robot_radius)
+    
+    # Draw orientation line
+    line_length = robot_radius * 2
+    end_x = robot_x + line_length * math.cos(theta)
+    end_y = robot_y + line_length * math.sin(theta)
+    pygame.draw.line(screen, BLACK, (int(robot_x), int(robot_y)), (int(end_x), int(end_y)), 3)
     
     # Update display
     pygame.display.flip()
